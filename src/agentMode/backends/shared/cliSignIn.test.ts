@@ -106,6 +106,12 @@ describe("cliSignIn", () => {
       jest.restoreAllMocks();
       Object.defineProperty(process, "platform", { value: hostPlatform });
     });
+    it("finds a sign-in link wrapped in ANSI color codes (https://github.com/ORee1000/obsidian-copilot/issues/1)", () => {
+      const onUrl = jest.fn();
+      signInWithCli("/adapter", ["login", "--device-auth"], {}, jest.fn(), { onUrl });
+      child.stdout.write("   \u001b[94mhttps://auth.openai.com/codex/device\u001b[0m\n");
+      expect(onUrl).toHaveBeenCalledWith("https://auth.openai.com/codex/device");
+    });
     it(`offers the printed browser fallback and reads authoritative status after exit: ${ISSUE}`, async () => {
       const read = jest.fn().mockResolvedValue({ loggedIn: false });
       const onUrl = jest.fn();

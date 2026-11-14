@@ -414,6 +414,7 @@ export const ClaudeBackendDescriptor: ClaudeDescriptor = {
   },
 
   auth: {
+    acceptsPastedCode: true,
     getProbeKey(settings) {
       // CLI credentials can come from a profile or an environment-selected provider.
       // Hash the effective environment so account changes cancel stale authentication

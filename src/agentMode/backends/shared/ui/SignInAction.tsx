@@ -11,7 +11,60 @@ export interface SignInActionProps {
   onCancel?: () => void;
   failed?: boolean;
   signInLabel?: string;
+  onSubmitCode?: (code: string) => void;
+  deviceCode?: string | null;
 }
+
+const DeviceCode: React.FC<{ code: string }> = ({ code }) => {
+  const [copied, setCopied] = React.useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(code).then(
+      () => setCopied(true),
+      () => setCopied(false)
+    );
+  };
+  return (
+    <div className="tw-flex tw-flex-wrap tw-items-center tw-gap-2 tw-text-sm">
+      <span className="tw-text-muted">Enter this one-time code on the sign-in page:</span>
+      <code className="tw-text-base tw-font-semibold">{code}</code>
+      <Button variant="secondary" size="sm" onClick={copy}>
+        {copied ? "Copied" : "Copy code"}
+      </Button>
+    </div>
+  );
+};
+
+const PastedCodeForm: React.FC<{ onSubmit: (code: string) => void }> = ({ onSubmit }) => {
+  const [code, setCode] = React.useState("");
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!code.trim()) return;
+    onSubmit(code);
+    setCode("");
+  };
+  return (
+    <form className="tw-flex tw-w-full tw-flex-col tw-gap-1" onSubmit={submit}>
+      <label className="tw-text-sm tw-text-muted" htmlFor="copilot-sign-in-code">
+        If the sign-in page shows a code, paste it here.
+      </label>
+      <div className="tw-flex tw-w-full tw-items-center tw-gap-2">
+        <input
+          id="copilot-sign-in-code"
+          type="text"
+          autoComplete="off"
+          spellCheck={false}
+          className="tw-min-w-0 tw-flex-1"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          placeholder="Authentication code"
+        />
+        <Button type="submit" variant="default" size="sm" disabled={!code.trim()}>
+          Submit code
+        </Button>
+      </div>
+    </form>
+  );
+};
 
 export const SignInAction: React.FC<SignInActionProps> = (auth) => (
   <div className="tw-flex tw-flex-col tw-items-start tw-gap-2" aria-live="polite">
@@ -59,6 +112,10 @@ export const SignInAction: React.FC<SignInActionProps> = (auth) => (
             </Button>
           )}
         </div>
+        {auth.signingIn && auth.deviceCode && <DeviceCode code={auth.deviceCode} />}
+        {auth.signingIn && auth.url && auth.onSubmitCode && (
+          <PastedCodeForm onSubmit={auth.onSubmitCode} />
+        )}
       </>
     )}
   </div>

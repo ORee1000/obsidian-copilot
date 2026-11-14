@@ -59,8 +59,10 @@ const ClaudeConfigContainer: React.FC<{
       auth={{
         status: auth.status,
         onSignIn: auth.signIn,
+        onSubmitCode: auth.submitCode,
         signingIn: auth.signingIn,
         url: auth.url,
+        deviceCode: auth.deviceCode,
         onCancel: auth.cancelSignIn,
         failed: auth.failed,
         signingOut: auth.signingOut,

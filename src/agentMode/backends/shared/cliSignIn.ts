@@ -17,6 +17,9 @@ export interface CliSignInController {
   cancel: () => void;
 }
 
+// eslint-disable-next-line no-control-regex -- matches the CLI's ANSI color codes
+const ANSI_COLOR = /\x1b\[[0-9;]*m/g;
+
 export function signInWithCli(
   command: string,
   args: string[],
@@ -94,7 +97,9 @@ export function signInWithCli(
   const handleLine = (line: string): void => {
     if (settled || cancelled) return;
     handlers.onLine?.(line);
-    const match = /\bhttps?:\/\/[^\s'"]+/.exec(line);
+    // Codex colors its device-login link, and the ANSI code before "https" hides the word boundary.
+    // https://github.com/ORee1000/obsidian-copilot/issues/1
+    const match = /\bhttps?:\/\/[^\s'"]+/.exec(line.replace(ANSI_COLOR, ""));
     // Diagnostic links must not consume the fallback before the authorization URL arrives.
     // https://github.com/Brevilabs/obsidian-copilot-private/issues/379
     if (!urlSeen && match && (!handlers.acceptUrl || handlers.acceptUrl(match[0]))) {

@@ -75,9 +75,13 @@ export interface BackendSignInHandlers {
   signal?: AbortSignal;
   onUrl?: (url: string) => void;
   onLine?: (line: string) => void;
+  onStdin?: (stdin: import("node:stream").Writable) => void;
 }
 
 export interface BackendAuth {
+  // Browser-hosted Obsidian cannot receive the CLI's localhost callback, so the page's code is pasted back instead.
+  // https://github.com/ORee1000/obsidian-copilot/issues/1
+  acceptsPastedCode?: boolean;
   getProbeKey?(settings: CopilotSettings): string;
   getStatus(settings: CopilotSettings): Promise<BackendAuthStatus>;
   signIn(settings: CopilotSettings, handlers?: BackendSignInHandlers): Promise<BackendAuthStatus>;

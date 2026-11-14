@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import type { BackendAuth, BackendAuthStatus } from "@/agentMode/session/types";
 import { buildSimpleSpawnDescriptor } from "@/agentMode/backends/shared/simpleBinaryBackend";
 import { sanitizeBuiltinSkillEnvOverrides } from "@/agentMode/backends/shared/builtinSkillEnv";
@@ -163,7 +164,9 @@ export const codexAuth: BackendAuth = {
     const call = await codexCliInvocation(settings, INSTALL_BEFORE_SIGN_IN);
     const result = await signInWithCli(
       call.command,
-      [...call.args, "login"],
+      // Browser-hosted Obsidian cannot receive Codex's localhost callback; device-code login needs none.
+      // https://github.com/ORee1000/obsidian-copilot/issues/1
+      [...call.args, "login", ...(COPILOT_LITE ? ["--device-auth"] : [])],
       call.env,
       async () => {
         const status = await codexAuth.getStatus(settings);
