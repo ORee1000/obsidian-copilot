@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { ChainType } from "@/chainType";
 import { Button } from "@/components/ui/button";
 import { DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
@@ -39,7 +40,7 @@ export function ChatModeSelector({
         <DropdownMenuItem onSelect={() => onModeChange(ChainType.LLM_CHAIN)}>
           Chat (free)
         </DropdownMenuItem>
-        {isPaidUser ? (
+        {COPILOT_LITE ? null : isPaidUser ? (
           <DropdownMenuItem onSelect={() => onModeChange(ChainType.COPILOT_PLUS_CHAIN)}>
             <div className="tw-flex tw-items-center tw-gap-1">
               <Sparkles className="tw-size-4" />

@@ -1,3 +1,5 @@
+import { COPILOT_LITE, LITE_UNAVAILABLE_MESSAGE } from "@/lite";
+import { Notice } from "obsidian";
 import { NavigatorUpsellModal } from "@/agentMode/navigator/ui/NavigatorUpsell";
 import { revealSessionsSidebar } from "@/agentMode/navigator/revealSessionsSidebar";
 import type CopilotPlugin from "@/main";
@@ -24,6 +26,10 @@ export function openNavigatorWhenUnlocked(plugin: CopilotPlugin): void {
 }
 
 export async function openSessionsSidebar(plugin: CopilotPlugin): Promise<void> {
+  if (COPILOT_LITE) {
+    new Notice(`Copilot Navigator: ${LITE_UNAVAILABLE_MESSAGE}`);
+    return;
+  }
   // The Navigator is a Supporter preview; its entry points stay visible and explain it instead.
   // https://github.com/Brevilabs/obsidian-copilot-private/issues/819
   if (!(await ensureNavigatorEntitlement(plugin.app))) {

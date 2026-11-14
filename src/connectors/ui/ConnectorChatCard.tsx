@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { CONNECTOR_SERVICES, type ConnectorCatalogEntry } from "@/connectors/catalog";
 import type {
   ConnectionManager,
@@ -36,7 +37,7 @@ export function ConnectorChatCard({
   const app = useApp();
   const snapshot = useConnectorsSnapshot(manager);
   const enabled = useIsConnectorsEnabled();
-  if (!snapshot) return null;
+  if (!snapshot || COPILOT_LITE) return null;
 
   const logIn = async (connectionId: string | undefined) => {
     if (!(await ensureConnectorsEntitlement(app))) return;

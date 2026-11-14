@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { logError } from "@/logger";
 import { checkLatestVersion, isNewerVersion, type LatestRelease } from "@/utils";
 import { useEffect, useState, useSyncExternalStore } from "react";
@@ -14,6 +15,9 @@ let latestReleaseRequest: Promise<LatestRelease | null> | null = null;
 let latestReleaseRequestedAt = 0;
 
 export function requestLatestRelease(): Promise<LatestRelease | null> {
+  // Lite ships from its own fork; upstream releases would offer an update that replaces it.
+  // https://github.com/ORee1000/obsidian-copilot/issues/1
+  if (COPILOT_LITE) return Promise.resolve(null);
   if (!latestReleaseRequest) {
     latestReleaseRequestedAt = Date.now();
     latestReleaseRequest = checkLatestVersion().then((result) => result.release);

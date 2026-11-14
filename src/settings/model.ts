@@ -1,4 +1,5 @@
 import { CustomModel, ProjectConfig } from "@/aiParams";
+import { applyLiteSettings } from "@/lite";
 import { BUILTIN_SKILLS } from "@/builtinSkills/builtinSkills";
 import { atom, createStore, useAtomValue } from "jotai";
 import { v4 as uuidv4 } from "uuid";
@@ -279,7 +280,7 @@ export function setSettings(
 ) {
   settingsStore.set(settingsAtom, (prev) => {
     const partial = typeof settings === "function" ? settings(prev) : settings;
-    return { ...prev, ...partial };
+    return applyLiteSettings({ ...prev, ...partial });
   });
 }
 
@@ -767,7 +768,7 @@ export function sanitizeSettings(settings: CopilotSettings): CopilotSettings {
   sanitizedSettings.customConnectors =
     customConnectors.length > 0 ? customConnectors : EMPTY_CUSTOM_CONNECTORS;
 
-  return sanitizedSettings;
+  return applyLiteSettings(sanitizedSettings);
 }
 
 function sanitizeAgentMode(raw: unknown): CopilotSettings["agentMode"] {

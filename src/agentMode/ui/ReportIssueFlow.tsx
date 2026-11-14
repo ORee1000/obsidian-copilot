@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Textarea } from "@/components/ui/textarea";
@@ -185,11 +186,19 @@ function DetailsPage({
         ))}
       </div>
 
-      <Callout tone="warning" title="Before you upload">
-        Copilot redacts common sensitive data from diagnostic text on your device before upload.
-        Review it before sending; screenshots are not automatically redacted. Reports are private
-        and deleted after 60 days.
-      </Callout>
+      {COPILOT_LITE ? (
+        <Callout tone="warning" title="Before you attach it">
+          Copilot redacts common sensitive data from diagnostic text on your device. The zip is
+          saved in your vault and is only shared if you attach it to the issue; screenshots are not
+          automatically redacted.
+        </Callout>
+      ) : (
+        <Callout tone="warning" title="Before you upload">
+          Copilot redacts common sensitive data from diagnostic text on your device before upload.
+          Review it before sending; screenshots are not automatically redacted. Reports are private
+          and deleted after 60 days.
+        </Callout>
+      )}
 
       <div className="tw-flex tw-justify-end tw-gap-2">
         <Button variant="secondary" onClick={onCancel}>
@@ -319,7 +328,7 @@ function ReviewPage({
           role="status"
         >
           <Loader2 className="tw-size-4 tw-animate-spin" aria-hidden="true" />
-          Uploading — this can&apos;t be canceled…
+          {COPILOT_LITE ? "Saving…" : "Uploading — this can't be canceled…"}
         </span>
       ) : (
         <div className="tw-flex tw-flex-wrap tw-justify-end tw-gap-2">
@@ -346,7 +355,11 @@ function ReviewPage({
             disabled={report === null}
             onClick={() => report && void runUpload(report)}
           >
-            {failure !== null ? "Retry upload" : "Upload & open issue"}
+            {COPILOT_LITE
+              ? "Save to vault & open issue"
+              : failure !== null
+                ? "Retry upload"
+                : "Upload & open issue"}
           </Button>
         </div>
       )}

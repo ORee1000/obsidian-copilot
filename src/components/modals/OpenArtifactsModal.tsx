@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { Button } from "@/components/ui/button";
 import { createPluginRoot } from "@/utils/react/createPluginRoot";
 import { SegmentedControl, type SegmentedControlOption } from "@/components/ui/segmented-control";
@@ -376,7 +377,7 @@ export function OpenArtifactsModalContent({
             Close
           </Button>
           {/* The upgrade is the screen's one way forward, so it is the primary action. https://github.com/Brevilabs/obsidian-copilot-private/issues/746 */}
-          {result.upgradeUrl && (
+          {result.upgradeUrl && !COPILOT_LITE && (
             <Button asChild>
               <a href={result.upgradeUrl} target="_blank" rel="noopener noreferrer">
                 Upgrade to Copilot Plus

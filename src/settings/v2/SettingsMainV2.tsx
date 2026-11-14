@@ -1,3 +1,4 @@
+import { LITE_HIDDEN_SETTINGS_TABS } from "@/lite";
 import { ResetSettingsConfirmModal } from "@/components/modals/ResetSettingsConfirmModal";
 import { Button } from "@/components/ui/button";
 import { MiyoLogo } from "@/miyo/ui/MiyoLogo";
@@ -77,7 +78,9 @@ const TAB_LABELS: Record<CopilotSettingsTabId, string> = {
   advanced: "Advanced",
 };
 
-const tabs = COPILOT_SETTINGS_TAB_IDS.map((id) => ({
+const VISIBLE_TAB_IDS = COPILOT_SETTINGS_TAB_IDS.filter((id) => !LITE_HIDDEN_SETTINGS_TABS.has(id));
+
+const tabs = VISIBLE_TAB_IDS.map((id) => ({
   id,
   icon: icons[id],
   label: TAB_LABELS[id],
@@ -113,7 +116,7 @@ const SettingsContent: React.FC = () => {
       <div className="tw-w-full tw-border tw-border-solid" />
 
       <div>
-        {COPILOT_SETTINGS_TAB_IDS.map((id) => {
+        {VISIBLE_TAB_IDS.map((id) => {
           const Component = components[id];
           return (
             <TabContent key={id} id={id} isSelected={selectedTab === id}>
@@ -154,7 +157,7 @@ const SettingsMainV2: React.FC<SettingsMainV2Props> = ({ plugin, initialTab = "b
   return (
     <PluginProvider plugin={plugin}>
       <ModelManagementProvider api={plugin.modelManagement}>
-        <TabProvider initialTab={initialTab}>
+        <TabProvider initialTab={LITE_HIDDEN_SETTINGS_TABS.has(initialTab) ? "basic" : initialTab}>
           <SettingsSubPageHost className="tw-mx-auto tw-max-w-[860px]">
             <div className="tw-mb-4 tw-flex tw-flex-col tw-gap-2">
               <div

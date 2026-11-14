@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import type { ModelEnableGroup, ModelEnableRow } from "@/components/ui/ModelEnableList";
 import type { Destination } from "@/types/destination";
 import { isOpencodeZenWireId, OPENCODE_ZEN_PROVIDER_ID } from "@/utils/opencodeModelId";
@@ -188,7 +189,7 @@ export function buildModelEnableGroups(
     out.push({ group: { key: `agent:${label}`, label, destination, rows }, kind: "agent" });
   }
 
-  if (isOpencode && copilotProviderMissing) {
+  if (isOpencode && copilotProviderMissing && !COPILOT_LITE) {
     const rows = copilotPlusCatalog.models
       .map(
         (model): ModelEnableRow => ({

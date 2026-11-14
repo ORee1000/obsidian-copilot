@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { backendRegistry } from "@/agentMode/backends/registry";
 import { TruncatedText } from "@/components/TruncatedText";
 import { computeVisibleTabIndices } from "@/components/ui/tabOverflow";
@@ -115,20 +116,22 @@ export const AgentTabStrip: React.FC<Props> = ({ manager, onOpenSidebar }) => {
 
   return (
     <div className="tw-flex tw-w-full tw-items-stretch tw-pl-2">
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <Button
-            variant="ghost2"
-            size="icon"
-            onClick={onOpenSidebar}
-            aria-label="Open Copilot Navigator"
-            className="tw-my-1 tw-shrink-0"
-          >
-            <PanelLeft className="tw-size-4" />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>Open Copilot Navigator</TooltipContent>
-      </Tooltip>
+      {!COPILOT_LITE && (
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <Button
+              variant="ghost2"
+              size="icon"
+              onClick={onOpenSidebar}
+              aria-label="Open Copilot Navigator"
+              className="tw-my-1 tw-shrink-0"
+            >
+              <PanelLeft className="tw-size-4" />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>Open Copilot Navigator</TooltipContent>
+        </Tooltip>
+      )}
       <div
         ref={stripRef}
         className="tw-relative tw-flex tw-min-w-0 tw-flex-1 tw-items-stretch tw-gap-1 tw-overflow-hidden tw-px-2"

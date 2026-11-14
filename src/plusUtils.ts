@@ -1,3 +1,4 @@
+import { COPILOT_LITE, LITE_UNAVAILABLE_MESSAGE } from "@/lite";
 import { setModelKey } from "@/aiParams";
 import { CopilotPlusExpiredModal } from "@/components/modals/CopilotPlusExpiredModal";
 import { ChatModelProviders, ChatModels } from "@/constants";
@@ -271,6 +272,10 @@ export async function applyLicenseSettings(): Promise<void> {
 }
 
 export function navigateToPlusPage(medium: ProductUtmMedium): void {
+  if (COPILOT_LITE) {
+    new Notice(LITE_UNAVAILABLE_MESSAGE);
+    return;
+  }
   window.open(createProductUrl(PRODUCT_URLS.COPILOT_PRICING, medium), "_blank");
 }
 

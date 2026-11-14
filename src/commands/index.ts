@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { logFileManager } from "@/logFileManager";
 import { FileCache } from "@/cache/fileCache";
 import { clearLegacyCaches } from "@/cache/legacyCaches";
@@ -139,10 +140,12 @@ export function registerCommands(plugin: CopilotPlugin, publish: PublishFile) {
     addCommand(plugin, COMMAND_IDS.OPEN_AGENT_CHAT_WINDOW, () => {
       void plugin.activateAgentView();
     });
-    addCommand(plugin, COMMAND_IDS.OPEN_AGENT_SESSIONS_SIDEBAR, async () => {
-      const { openSessionsSidebar } = await import("@/agentMode");
-      await openSessionsSidebar(plugin);
-    });
+    if (!COPILOT_LITE) {
+      addCommand(plugin, COMMAND_IDS.OPEN_AGENT_SESSIONS_SIDEBAR, async () => {
+        const { openSessionsSidebar } = await import("@/agentMode");
+        await openSessionsSidebar(plugin);
+      });
+    }
     addCommand(plugin, COMMAND_IDS.TOGGLE_AGENT_CHAT_WINDOW, () => {
       void plugin.toggleAgentView();
     });

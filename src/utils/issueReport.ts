@@ -1,3 +1,4 @@
+import { COPILOT_LITE, LITE_REPORT_REPO } from "@/lite";
 import { err2String } from "@/errorFormat";
 import { formatBytes } from "@/utils/formatBytes";
 import { type ReportUploadAttempt } from "@/utils/reportUpload";
@@ -16,7 +17,7 @@ import {
   withTruncationNote,
 } from "@/utils/logTail";
 
-const REPORT_REPO = "logancyang/obsidian-copilot";
+const REPORT_REPO = COPILOT_LITE ? LITE_REPORT_REPO : "logancyang/obsidian-copilot";
 const SCREENSHOT_NAME = "screenshot.png";
 const REPORT_NOTE_NAME = "report.md";
 const SCREENSHOT_SOURCE_ID = "screenshot";
@@ -268,7 +269,10 @@ export function buildManualIssueUrl(draft: ReportIssueDraft): string {
 }
 
 export function buildLinkedReportIssueUrl(draft: ReportIssueDraft, reportId: string): string {
-  return buildIssueUrl(draft.title, `**Copilot report ID:** \`${reportId}\`\n\n`, draft.body);
+  const prefix = COPILOT_LITE
+    ? `**Report zip:** saved in the vault at \`${reportId}\` — attach it to this issue.\n\n`
+    : `**Copilot report ID:** \`${reportId}\`\n\n`;
+  return buildIssueUrl(draft.title, prefix, draft.body);
 }
 
 function exactArrayBuffer(bytes: Uint8Array): ArrayBuffer {

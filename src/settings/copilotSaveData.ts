@@ -1,3 +1,4 @@
+import { COPILOT_PLUGIN_ID } from "@/lite";
 import type { CopilotSettings } from "@/settings/model";
 import type { App } from "obsidian";
 
@@ -8,7 +9,7 @@ export function getCopilotSaveData(app: App): (data: CopilotSettings) => Promise
         getPlugin: (id: string) => { saveData: (data: CopilotSettings) => Promise<void> } | null;
       };
     };
-    const copilotPlugin = plugins.getPlugin("copilot");
+    const copilotPlugin = plugins.getPlugin(COPILOT_PLUGIN_ID);
     if (!copilotPlugin) throw new Error("Copilot plugin not found");
     await copilotPlugin.saveData(data);
   };

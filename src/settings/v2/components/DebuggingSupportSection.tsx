@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { Button } from "@/components/ui/button";
 import { SettingItem } from "@/components/ui/setting-item";
 import { SettingSection } from "@/components/ui/setting-section";
@@ -33,7 +34,11 @@ export const DebuggingSupportSection: React.FC<DebuggingSupportSectionProps> = (
     <SettingItem
       type="custom"
       title="Report an issue"
-      description="Walks you through collecting a screenshot and recent logs, packs them into a single zip you can review, uploads it privately, and opens a prefilled GitHub issue with the report ID already in it."
+      description={
+        COPILOT_LITE
+          ? "Walks you through collecting a screenshot and recent logs, saves them as a single zip in your vault, and opens a prefilled GitHub issue on the Copilot Lite fork for you to attach it to."
+          : "Walks you through collecting a screenshot and recent logs, packs them into a single zip you can review, uploads it privately, and opens a prefilled GitHub issue with the report ID already in it."
+      }
     >
       <Button variant="default" size="sm" onClick={onReportIssue}>
         Report an issue

@@ -164,3 +164,13 @@ if (typeof window.activeDocument === "undefined") {
 if (typeof window.activeWindow === "undefined") {
   window.activeWindow = window;
 }
+
+// Upstream suites keep testing upstream behavior; Lite behavior is covered by suites that unmock @/lite.
+// https://github.com/ORee1000/obsidian-copilot/issues/1
+jest.mock("@/lite", () => ({
+  ...jest.requireActual("@/lite"),
+  COPILOT_LITE: false,
+  COPILOT_PLUGIN_ID: "copilot",
+  LITE_HIDDEN_SETTINGS_TABS: new Set(),
+  applyLiteSettings: (settings) => settings,
+}));

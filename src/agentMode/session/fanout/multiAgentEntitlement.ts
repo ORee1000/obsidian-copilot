@@ -1,3 +1,4 @@
+import { COPILOT_LITE, LITE_UNAVAILABLE_MESSAGE } from "@/lite";
 import {
   ensureEntitlement,
   hasVerifiedFeature,
@@ -25,6 +26,10 @@ export function ensureMultiAgentEntitlement(app?: App): Promise<boolean> {
 }
 
 export function showMultiAgentUpgradePrompt(): void {
+  if (COPILOT_LITE) {
+    new Notice(`Multi-agent answers: ${LITE_UNAVAILABLE_MESSAGE}`, 8000);
+    return;
+  }
   new Notice(
     "Multi-agent answers (@-mentioning more than one agent in a message) are a Copilot Plus feature. Opening the upgrade page…",
     8000

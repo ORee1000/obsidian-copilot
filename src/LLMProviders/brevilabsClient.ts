@@ -1,4 +1,5 @@
 import { BREVILABS_API_BASE_URL, BREVILABS_MODELS_BASE_URL } from "@/constants";
+import { COPILOT_LITE, LITE_UNAVAILABLE_MESSAGE } from "@/lite";
 import type { EntitlementFeature } from "@/entitlement";
 import { MissingPlusLicenseError } from "@/error";
 import { logInfo } from "@/logger";
@@ -173,6 +174,9 @@ export class BrevilabsClient {
     excludeAuthHeader = false,
     skipLicenseCheck = false
   ): Promise<BrevilabsApiResult<T>> {
+    if (COPILOT_LITE) {
+      return { data: null, error: new Error(LITE_UNAVAILABLE_MESSAGE), status: 0 };
+    }
     if (!skipLicenseCheck) {
       this.checkLicenseKey();
     }

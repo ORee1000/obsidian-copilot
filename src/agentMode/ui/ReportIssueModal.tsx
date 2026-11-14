@@ -1,3 +1,5 @@
+import { COPILOT_LITE } from "@/lite";
+import { createVaultReportSaver } from "@/utils/reportUpload.vault";
 import { frameSink } from "@/agentMode/session/debugSink";
 import { logError, logInfo, logWarn } from "@/logger";
 import { flushRecordedPromptPayloadToLog } from "@/LLMProviders/chainRunner/utils/promptPayloadRecorder";
@@ -60,10 +62,12 @@ export function openReportIssueModal(
     ...options,
     app,
     pluginVersion: manifest.version,
-    uploader: createReportUploader({
-      installId: () => getPersistedDeviceId(app),
-      clientVersion: manifest.version,
-    }),
+    uploader: COPILOT_LITE
+      ? createVaultReportSaver(app.vault.adapter)
+      : createReportUploader({
+          installId: () => getPersistedDeviceId(app),
+          clientVersion: manifest.version,
+        }),
   });
   modal.open();
   return modal;

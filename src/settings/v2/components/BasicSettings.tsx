@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { ConfirmModal } from "@/components/modals/ConfirmModal";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -192,7 +193,7 @@ export const BasicSettings: React.FC = () => {
 
   return (
     <div className="tw-space-y-4">
-      <PlusSettings />
+      {!COPILOT_LITE && <PlusSettings />}
 
       <AgentsSection />
 

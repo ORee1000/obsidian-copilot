@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { Notice } from "obsidian";
 import { OPENCODE_PINNED_VERSION, OPENCODE_MIN_VERSION } from "./ui/opencodeVersion";
 import { resolveEffort } from "@/lib/model-effort";
@@ -81,8 +82,9 @@ export const OpencodeBackendDescriptor: BackendDescriptor = {
   Icon: OpencodeLogo,
   selfHostable: true,
   routesCopilotModels: true,
-  setupDescription:
-    "Copilot Plus models, or any model on your own provider key. Copilot can download and manage the binary for you.",
+  setupDescription: COPILOT_LITE
+    ? "Any model on your own provider key, or OpenCode's own models. Copilot can download and manage the binary for you."
+    : "Copilot Plus models, or any model on your own provider key. Copilot can download and manage the binary for you.",
   skillsProjectDir: ".opencode/skills",
   crossDiscoveredAgents: ["claude", "codex"],
   restartOnManagedSkillsChange: true,

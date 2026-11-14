@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import type { ModelSelectorEntry } from "@/components/ui/ModelSelector";
 import { ChatModelProviders } from "@/constants";
 import type { ModelInfo } from "@/modelManagement";
@@ -23,6 +24,7 @@ function previewedModel(catalog: CopilotSettings["copilotPlusCatalog"]): ModelIn
 }
 
 export function shouldPreviewCopilotModels(providers: CopilotSettings["providers"]): boolean {
+  if (COPILOT_LITE) return false;
   return !Object.values(providers).some((provider) => provider.origin.kind === "copilot-plus");
 }
 
