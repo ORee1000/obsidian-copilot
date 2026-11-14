@@ -42,17 +42,17 @@ describe("lite", () => {
     });
   });
 
-  it("builds as Hearth under its own plugin id", () => {
+  it("builds as Hestia under its own plugin id", () => {
     expect(COPILOT_LITE).toBe(true);
-    expect(COPILOT_PLUGIN_ID).toBe("hearth");
-    expect(PRODUCT_NAME).toBe("Hearth");
+    expect(COPILOT_PLUGIN_ID).toBe("hestia");
+    expect(PRODUCT_NAME).toBe("Hestia");
     expect(HEARTH_ICON_SVG).toContain('stroke="currentColor"');
   });
 
   describe("branded()", () => {
-    it("names the product Hearth in user-facing labels (https://github.com/ORee1000/obsidian-copilot/issues/1)", () => {
-      expect(branded("Open Copilot Agent Chat window")).toBe("Open Hearth Agent Chat window");
-      expect(branded("Copilot settings")).toBe("Hearth settings");
+    it("names the product Hestia in user-facing labels (https://github.com/ORee1000/obsidian-copilot/issues/1)", () => {
+      expect(branded("Open Copilot Agent Chat window")).toBe("Open Hestia Agent Chat window");
+      expect(branded("Copilot settings")).toBe("Hestia settings");
       expect(branded("Trigger quick command")).toBe("Trigger quick command");
     });
   });

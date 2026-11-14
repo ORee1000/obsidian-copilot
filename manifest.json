@@ -1,14 +1,10 @@
 {
-  "id": "hearth",
-  "name": "Hearth",
+  "id": "hestia",
+  "name": "Hestia",
   "version": "4.0.20",
   "minAppVersion": "1.11.4",
   "isDesktopOnly": false,
-  "description": "obsidian-web's agent workspace: OpenCode, Claude Code and Codex in your vault, chat with your own keys, Projects, Skills and Commands. Based on Copilot for Obsidian (AGPL-3.0).",
-  "author": "Logan Yang (Copilot Lite fork: ORee1000)",
-  "authorUrl": "https://github.com/ORee1000/obsidian-copilot",
-  "fundingUrl": {
-    "Buy Me a Coffee": "https://www.buymeacoffee.com/logancyang",
-    "GitHub Sponsor": "https://github.com/sponsors/logancyang"
-  }
+  "description": "obsidian-web's agent workspace: OpenCode, Claude Code and Codex in your vault, chat with your own keys, Projects, Skills and Commands.",
+  "author": "ORee1000 (based on Copilot for Obsidian by Logan Yang)",
+  "authorUrl": "https://github.com/ORee1000/obsidian-copilot"
 }
