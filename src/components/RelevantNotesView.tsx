@@ -1,3 +1,4 @@
+import { branded } from "@/lite";
 import { RelevantNotes } from "@/components/chat-components/RelevantNotes";
 import { RELEVANT_NOTES_VIEWTYPE } from "@/constants";
 import { EventTargetContext } from "@/context";
@@ -30,7 +31,7 @@ export default class RelevantNotesView extends ItemView {
   }
 
   getTitle(): string {
-    return "Copilot Relevant Notes";
+    return branded("Copilot Relevant Notes");
   }
 
   getDisplayText(): string {

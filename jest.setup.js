@@ -171,6 +171,8 @@ jest.mock("@/lite", () => ({
   ...jest.requireActual("@/lite"),
   COPILOT_LITE: false,
   COPILOT_PLUGIN_ID: "copilot",
+  PRODUCT_NAME: "Copilot",
+  branded: (text) => text,
   LITE_HIDDEN_SETTINGS_TABS: new Set(),
   applyLiteSettings: (settings) => settings,
 }));

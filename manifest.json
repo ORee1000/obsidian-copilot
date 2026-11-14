@@ -1,10 +1,10 @@
 {
-  "id": "copilot-lite",
-  "name": "Copilot Lite",
+  "id": "hearth",
+  "name": "Hearth",
   "version": "4.0.20",
   "minAppVersion": "1.11.4",
   "isDesktopOnly": false,
-  "description": "Copilot for Obsidian without Copilot Plus, Miyo or Brevilabs services: agents (OpenCode, Claude Code, Codex), Quick Chat with your own keys, Projects, Skills and Commands.",
+  "description": "obsidian-web's agent workspace: OpenCode, Claude Code and Codex in your vault, chat with your own keys, Projects, Skills and Commands. Based on Copilot for Obsidian (AGPL-3.0).",
   "author": "Logan Yang (Copilot Lite fork: ORee1000)",
   "authorUrl": "https://github.com/ORee1000/obsidian-copilot",
   "fundingUrl": {

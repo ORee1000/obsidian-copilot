@@ -1,3 +1,4 @@
+import { branded } from "@/lite";
 import { logError } from "@/logger";
 import { ItemView, type View, type WorkspaceLeaf } from "obsidian";
 
@@ -26,7 +27,7 @@ export class StartupLoadingView extends ItemView {
   }
 
   getDisplayText(): string {
-    return "Copilot";
+    return branded("Copilot");
   }
 
   getIcon(): string {

@@ -2,9 +2,12 @@ jest.unmock("@/lite");
 
 import {
   applyLiteSettings,
+  branded,
   COPILOT_LITE,
   COPILOT_PLUGIN_ID,
+  HEARTH_ICON_SVG,
   LITE_HIDDEN_SETTINGS_TABS,
+  PRODUCT_NAME,
 } from "@/lite";
 import { COPILOT_SETTINGS_TAB_IDS } from "@/settings/settingsTabs";
 
@@ -39,9 +42,19 @@ describe("lite", () => {
     });
   });
 
-  it("builds as Copilot Lite under its own plugin id", () => {
+  it("builds as Hearth under its own plugin id", () => {
     expect(COPILOT_LITE).toBe(true);
-    expect(COPILOT_PLUGIN_ID).toBe("copilot-lite");
+    expect(COPILOT_PLUGIN_ID).toBe("hearth");
+    expect(PRODUCT_NAME).toBe("Hearth");
+    expect(HEARTH_ICON_SVG).toContain('stroke="currentColor"');
+  });
+
+  describe("branded()", () => {
+    it("names the product Hearth in user-facing labels (https://github.com/ORee1000/obsidian-copilot/issues/1)", () => {
+      expect(branded("Open Copilot Agent Chat window")).toBe("Open Hearth Agent Chat window");
+      expect(branded("Copilot settings")).toBe("Hearth settings");
+      expect(branded("Trigger quick command")).toBe("Trigger quick command");
+    });
   });
 
   it("hides only settings tabs that exist", () => {

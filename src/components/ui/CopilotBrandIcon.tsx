@@ -1,4 +1,9 @@
-import { COPILOT_AGENT_ICON_PATH, COPILOT_AGENT_ICON_TRANSFORM } from "@/constants";
+import {
+  BRAND_ICON_IS_CUSTOM,
+  COPILOT_AGENT_ICON_PATH,
+  COPILOT_AGENT_ICON_SVG,
+  COPILOT_AGENT_ICON_TRANSFORM,
+} from "@/constants";
 import { cn } from "@/lib/utils";
 import React from "react";
 
@@ -12,9 +17,14 @@ export const CopilotBrandIcon: React.FC<CopilotBrandIconProps> = ({ className })
     xmlns="http://www.w3.org/2000/svg"
     aria-hidden="true"
     className={cn("tw-shrink-0", className)}
+    {...(BRAND_ICON_IS_CUSTOM
+      ? { dangerouslySetInnerHTML: { __html: COPILOT_AGENT_ICON_SVG } }
+      : {})}
   >
-    <g transform={COPILOT_AGENT_ICON_TRANSFORM}>
-      <path fill="currentColor" d={COPILOT_AGENT_ICON_PATH} />
-    </g>
+    {BRAND_ICON_IS_CUSTOM ? null : (
+      <g transform={COPILOT_AGENT_ICON_TRANSFORM}>
+        <path fill="currentColor" d={COPILOT_AGENT_ICON_PATH} />
+      </g>
+    )}
   </svg>
 );

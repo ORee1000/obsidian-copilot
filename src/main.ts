@@ -1,3 +1,4 @@
+import { branded } from "@/lite";
 import { startReleaseUpdateCheck } from "@/services/releaseUpdateNotice";
 import { releaseCursorAssociation } from "@/editor/releaseCursorAssociation";
 import { registerNoteHeaderAction } from "@/editor/registerNoteHeaderAction";
@@ -527,7 +528,7 @@ export default class CopilotPlugin extends Plugin implements CopilotStartup {
     const agentReady = this.canUseAgentView();
     this.ribbonIconEl = this.addRibbonIcon(
       agentReady ? COPILOT_AGENT_ICON_ID : "message-square",
-      agentReady ? "Open Copilot Agent Chat" : "Open Copilot Chat",
+      branded(agentReady ? "Open Copilot Agent Chat" : "Open Copilot Chat"),
       () => (this.canUseAgentView() ? this.activateAgentView() : this.activateView())
     );
 

@@ -1,3 +1,4 @@
+import { branded } from "@/lite";
 import ChainManager from "@/LLMProviders/chainManager";
 import Chat from "@/components/Chat";
 import { CHAT_VIEWTYPE } from "@/constants";
@@ -43,7 +44,7 @@ export default class CopilotView extends ItemView {
   }
 
   getDisplayText(): string {
-    return "Copilot Quick Chat";
+    return branded("Copilot Quick Chat");
   }
 
   async onOpen(): Promise<void> {

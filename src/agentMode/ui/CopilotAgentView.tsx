@@ -1,3 +1,4 @@
+import { branded } from "@/lite";
 import { AgentModeChat } from "@/agentMode/ui/AgentModeChat";
 import { attachChatViewLayoutObservers } from "@/components/chat-components/attachChatViewLayoutObservers";
 import { CHAT_AGENT_VIEWTYPE, COPILOT_AGENT_ICON_ID } from "@/constants";
@@ -34,7 +35,7 @@ export default class CopilotAgentView extends ItemView {
   }
 
   getTitle(): string {
-    return "Copilot Agent Chat";
+    return branded("Copilot Agent Chat");
   }
 
   getDisplayText(): string {

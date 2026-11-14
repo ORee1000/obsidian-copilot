@@ -1,3 +1,4 @@
+import { COPILOT_LITE, HEARTH_ICON_SVG, branded } from "@/lite";
 import { DEFAULT_BUILTIN_PREFERENCES } from "@/builtinSkills/builtinSkills";
 import { type CopilotSettings } from "@/settings/model";
 import { v4 as uuidv4 } from "uuid";
@@ -35,7 +36,11 @@ export const COPILOT_AGENT_ICON_TRANSFORM = "translate(0 8.2) scale(0.6579) tran
 export const COPILOT_AGENT_ICON_PATH =
   "M75.9 6.9c-6.8 1.4-12.5 6-35.5 29.3-33.5 33.8-33.5 33.9-34.2 62.2-0.3 12.4 0 20.2 0.7 22.7 2.4 7.8 10.8 11.2 17.6 7.1 1.7-1.1 14.9-14.1 29.5-29.1 14.5-14.9 26.7-27 27-26.9 0.3 0.2 12.4 12.4 27 27.3 14.6 14.8 27.6 27.8 29 28.7 5.1 3.6 13.6 1.4 16.5-4.2 1.2-2.3 1.5-6.9 1.5-22.3 0-22.9-1.2-28.6-8.3-37.9-7.6-10.2-50-52.3-54.9-54.6-5.1-2.4-10.9-3.2-15.9-2.3z";
 
-export const COPILOT_AGENT_ICON_SVG = `<g transform="${COPILOT_AGENT_ICON_TRANSFORM}"><path fill="currentColor" d="${COPILOT_AGENT_ICON_PATH}"/></g>`;
+export const BRAND_ICON_IS_CUSTOM = COPILOT_LITE;
+
+export const COPILOT_AGENT_ICON_SVG = COPILOT_LITE
+  ? HEARTH_ICON_SVG
+  : `<g transform="${COPILOT_AGENT_ICON_TRANSFORM}"><path fill="currentColor" d="${COPILOT_AGENT_ICON_PATH}"/></g>`;
 
 export const USER_SENDER = "user";
 export const AI_SENDER = "ai";
@@ -377,32 +382,32 @@ export const COMMAND_IDS = {
 } as const;
 
 export const COMMAND_NAMES: Record<CommandId, string> = {
-  [COMMAND_IDS.TRIGGER_QUICK_COMMAND]: "Trigger quick command",
-  [COMMAND_IDS.CLEAR_COPILOT_CACHE]: "Clear Copilot cache",
-  [COMMAND_IDS.COUNT_TOTAL_VAULT_TOKENS]: "Count total tokens in your vault",
-  [COMMAND_IDS.COUNT_WORD_AND_TOKENS_SELECTION]: "Count words and tokens in selection",
-  [COMMAND_IDS.DEBUG_WORD_COMPLETION]: "Word completion: Debug",
-  [COMMAND_IDS.REFRESH_MIYO_INDEX]: "Refresh Miyo index",
-  [COMMAND_IDS.LOAD_COPILOT_CHAT_CONVERSATION]: "Load Copilot Quick Chat history",
-  [COMMAND_IDS.NEW_CHAT]: "New Copilot Quick Chat",
-  [COMMAND_IDS.NEW_AGENT_CHAT]: "New Copilot Agent Chat",
-  [COMMAND_IDS.OPEN_COPILOT_CHAT_WINDOW]: "Open Copilot Quick Chat window",
-  [COMMAND_IDS.OPEN_AGENT_CHAT_WINDOW]: "Open Copilot Agent Chat window",
-  [COMMAND_IDS.OPEN_AGENT_SESSIONS_SIDEBAR]: "Open Copilot Navigator",
-  [COMMAND_IDS.OPEN_RELEVANT_NOTES_VIEW]: "Open Relevant Notes",
-  [COMMAND_IDS.TOGGLE_COPILOT_CHAT_WINDOW]: "Toggle Copilot Quick Chat window",
-  [COMMAND_IDS.TOGGLE_AGENT_CHAT_WINDOW]: "Toggle Copilot Agent Chat window",
-  [COMMAND_IDS.ADD_SELECTION_TO_CHAT_CONTEXT]: "Add selection to chat context",
-  [COMMAND_IDS.ADD_WEB_SELECTION_TO_CHAT_CONTEXT]: "Add web selection to chat context",
-  [COMMAND_IDS.ADD_CUSTOM_COMMAND]: "Add new custom command",
-  [COMMAND_IDS.APPLY_CUSTOM_COMMAND]: "Apply custom command",
-  [COMMAND_IDS.OPEN_LOG_FILE]: "Open Copilot log file",
-  [COMMAND_IDS.CLEAR_LOG_FILE]: "Clear Copilot log file",
-  [COMMAND_IDS.DOWNLOAD_YOUTUBE_SCRIPT]: "Download YouTube transcript (Plus)",
-  [COMMAND_IDS.PUBLISH_FILE_TO_OPENARTIFACTS]: "Publish file to OpenArtifacts",
-  [COMMAND_IDS.TRIGGER_QUICK_ASK]: "Quick Ask",
-  [COMMAND_IDS.NEXT_DIFF_CHANGE]: "Go to next change in file diff",
-  [COMMAND_IDS.PREVIOUS_DIFF_CHANGE]: "Go to previous change in file diff",
+  [COMMAND_IDS.TRIGGER_QUICK_COMMAND]: branded("Trigger quick command"),
+  [COMMAND_IDS.CLEAR_COPILOT_CACHE]: branded("Clear Copilot cache"),
+  [COMMAND_IDS.COUNT_TOTAL_VAULT_TOKENS]: branded("Count total tokens in your vault"),
+  [COMMAND_IDS.COUNT_WORD_AND_TOKENS_SELECTION]: branded("Count words and tokens in selection"),
+  [COMMAND_IDS.DEBUG_WORD_COMPLETION]: branded("Word completion: Debug"),
+  [COMMAND_IDS.REFRESH_MIYO_INDEX]: branded("Refresh Miyo index"),
+  [COMMAND_IDS.LOAD_COPILOT_CHAT_CONVERSATION]: branded("Load Copilot Quick Chat history"),
+  [COMMAND_IDS.NEW_CHAT]: branded("New Copilot Quick Chat"),
+  [COMMAND_IDS.NEW_AGENT_CHAT]: branded("New Copilot Agent Chat"),
+  [COMMAND_IDS.OPEN_COPILOT_CHAT_WINDOW]: branded("Open Copilot Quick Chat window"),
+  [COMMAND_IDS.OPEN_AGENT_CHAT_WINDOW]: branded("Open Copilot Agent Chat window"),
+  [COMMAND_IDS.OPEN_AGENT_SESSIONS_SIDEBAR]: branded("Open Copilot Navigator"),
+  [COMMAND_IDS.OPEN_RELEVANT_NOTES_VIEW]: branded("Open Relevant Notes"),
+  [COMMAND_IDS.TOGGLE_COPILOT_CHAT_WINDOW]: branded("Toggle Copilot Quick Chat window"),
+  [COMMAND_IDS.TOGGLE_AGENT_CHAT_WINDOW]: branded("Toggle Copilot Agent Chat window"),
+  [COMMAND_IDS.ADD_SELECTION_TO_CHAT_CONTEXT]: branded("Add selection to chat context"),
+  [COMMAND_IDS.ADD_WEB_SELECTION_TO_CHAT_CONTEXT]: branded("Add web selection to chat context"),
+  [COMMAND_IDS.ADD_CUSTOM_COMMAND]: branded("Add new custom command"),
+  [COMMAND_IDS.APPLY_CUSTOM_COMMAND]: branded("Apply custom command"),
+  [COMMAND_IDS.OPEN_LOG_FILE]: branded("Open Copilot log file"),
+  [COMMAND_IDS.CLEAR_LOG_FILE]: branded("Clear Copilot log file"),
+  [COMMAND_IDS.DOWNLOAD_YOUTUBE_SCRIPT]: branded("Download YouTube transcript (Plus)"),
+  [COMMAND_IDS.PUBLISH_FILE_TO_OPENARTIFACTS]: branded("Publish file to OpenArtifacts"),
+  [COMMAND_IDS.TRIGGER_QUICK_ASK]: branded("Quick Ask"),
+  [COMMAND_IDS.NEXT_DIFF_CHANGE]: branded("Go to next change in file diff"),
+  [COMMAND_IDS.PREVIOUS_DIFF_CHANGE]: branded("Go to previous change in file diff"),
 };
 
 export type CommandId = (typeof COMMAND_IDS)[keyof typeof COMMAND_IDS];

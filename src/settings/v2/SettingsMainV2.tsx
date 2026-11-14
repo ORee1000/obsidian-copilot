@@ -1,4 +1,4 @@
-import { LITE_HIDDEN_SETTINGS_TABS } from "@/lite";
+import { LITE_HIDDEN_SETTINGS_TABS, branded } from "@/lite";
 import { ResetSettingsConfirmModal } from "@/components/modals/ResetSettingsConfirmModal";
 import { Button } from "@/components/ui/button";
 import { MiyoLogo } from "@/miyo/ui/MiyoLogo";
@@ -166,7 +166,7 @@ const SettingsMainV2: React.FC<SettingsMainV2Props> = ({ plugin, initialTab = "b
                 className="tw-flex tw-flex-col tw-gap-2 tw-text-base tw-font-semibold sm:tw-flex-row sm:tw-items-center sm:tw-justify-between"
               >
                 <div className="tw-flex tw-items-center tw-gap-2">
-                  <span>Copilot settings</span>
+                  <span>{branded("Copilot settings")}</span>
                   <div className="tw-flex tw-items-center tw-gap-1">
                     <span className="tw-text-xs tw-font-normal tw-text-muted">
                       v{plugin.manifest.version}
