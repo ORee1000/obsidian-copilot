@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { type App, Platform } from "obsidian";
 import type CopilotPlugin from "@/main";
 import { logError } from "@/logger";
@@ -257,7 +258,9 @@ export function createAgentSessionManager(app: App, plugin: CopilotPlugin): Agen
           run: runInRunningObsidian,
         }),
       },
-      ...(connectionManager
+      // Lite hides Connectors, so a connect card the agent raises would never show.
+      // https://github.com/ORee1000/obsidian-copilot/issues/1
+      ...(connectionManager && !COPILOT_LITE
         ? [
             createSuggestConnectorTool({
               catalog: CONNECTOR_CATALOG,
