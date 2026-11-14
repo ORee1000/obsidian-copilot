@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { useChatRelevantNotesContext } from "@/agentMode/ui/hooks/useChatRelevantNotesContext";
 import AgentChatMessages from "@/agentMode/ui/AgentChatMessages";
 import { AgentChatControls } from "@/agentMode/ui/AgentChatControls";
@@ -666,12 +667,20 @@ const AgentHomeInternal: React.FC<AgentHomeProps> = ({
   const hero = (
     <div className="tw-flex tw-min-w-0 tw-items-center tw-justify-center tw-gap-3">
       <CopilotBrandIcon className="tw-size-6 tw-shrink-0 tw-text-normal" />
-      <TruncatedText
-        className="tw-min-w-0 tw-text-3xl tw-font-[330] tw-text-normal"
-        tooltipContent={heroText}
-      >
-        {heroText}
-      </TruncatedText>
+      {COPILOT_LITE ? (
+        // A one-line ellipsis cut the greeting off in the narrow sidebar; let it wrap instead.
+        // https://github.com/ORee1000/obsidian-copilot/issues/1
+        <div className="tw-min-w-0 tw-text-balance tw-break-words tw-text-center tw-text-2xl tw-font-[330] tw-leading-tight tw-text-normal">
+          {heroText}
+        </div>
+      ) : (
+        <TruncatedText
+          className="tw-min-w-0 tw-text-3xl tw-font-[330] tw-text-normal"
+          tooltipContent={heroText}
+        >
+          {heroText}
+        </TruncatedText>
+      )}
     </div>
   );
 
