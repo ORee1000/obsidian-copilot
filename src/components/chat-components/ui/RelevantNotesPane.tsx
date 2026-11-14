@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import { Button } from "@/components/ui/button";
 import type {
   RelevantNotesSearchStatus,
@@ -121,6 +122,9 @@ export function RelevantNotesPane({
       );
       break;
     case "disabled":
+      // Lite has no Miyo; link-based related notes stay, without the Miyo download prompt.
+      // https://github.com/ORee1000/obsidian-copilot/issues/1
+      if (COPILOT_LITE) break;
       guidancePanel = (
         <GuidancePanel
           id="download"
