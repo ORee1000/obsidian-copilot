@@ -1,3 +1,4 @@
+import { COPILOT_LITE } from "@/lite";
 import type { App } from "obsidian";
 import { v4 as uuidv4, validate as validateUuid, version as uuidVersion } from "uuid";
 
@@ -7,7 +8,17 @@ const FALLBACK_DEVICE_ID = "unknown";
 
 const cachedDeviceIds = new WeakMap<App, string>();
 
+// Hosted in obsidian-web, agents run on the server, so every browser shares one profile of agent
+// paths; a per-browser id made each new browser lose the OpenCode and Codex setup.
+// https://github.com/ORee1000/obsidian-copilot/issues/1
+export const SERVER_DEVICE_ID = "00000000-0000-4000-8000-000000000000";
+
+function isServerHosted(): boolean {
+  return COPILOT_LITE && typeof window !== "undefined" && "__server" in window;
+}
+
 export function getDeviceId(app: App): string {
+  if (isServerHosted()) return SERVER_DEVICE_ID;
   const cachedDeviceId = cachedDeviceIds.get(app);
   if (cachedDeviceId) return cachedDeviceId;
 

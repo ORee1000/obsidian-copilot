@@ -1,3 +1,6 @@
+import { COPILOT_LITE } from "@/lite";
+import { openCopilotSettings } from "@/settings/openSettings";
+import { useApp } from "@/context";
 import { backendRegistry } from "@/agentMode/backends/registry";
 import { ChatBookmarkMenuItem } from "@/agentMode/ui/ChatBookmarkMenuItem";
 import type { ChatBookmarkState } from "@/agentMode/ui/hooks/useAgentHistoryControls";
@@ -25,6 +28,7 @@ import {
   Link,
   MessageCirclePlus,
   MoreHorizontal,
+  Settings,
 } from "lucide-react";
 import React, { useCallback, useState } from "react";
 
@@ -67,6 +71,27 @@ interface AgentChatControlsProps {
   usageMeter?: React.ReactNode;
   tasksIndicator?: React.ReactNode;
 }
+
+// A first-time user has no other visible way back to agent setup and sign-in once a chat is open.
+// https://github.com/ORee1000/obsidian-copilot/issues/1
+const SettingsButton: React.FC = () => {
+  const app = useApp();
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <Button
+          variant="ghost2"
+          size="icon"
+          title="Settings"
+          onClick={(event) => openCopilotSettings(app, event.currentTarget.win, "basic")}
+        >
+          <Settings className="tw-size-4" />
+        </Button>
+      </TooltipTrigger>
+      <TooltipContent>Settings: agents, sign-in, models</TooltipContent>
+    </Tooltip>
+  );
+};
 
 export const AgentChatControls: React.FC<AgentChatControlsProps> = ({
   onNewChat,
@@ -160,6 +185,7 @@ export const AgentChatControls: React.FC<AgentChatControlsProps> = ({
             <TooltipContent>Chat history</TooltipContent>
           </Tooltip>
         )}
+        {COPILOT_LITE && <SettingsButton />}
         {onNewChat && (
           <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
