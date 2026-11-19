@@ -1,3 +1,4 @@
+import { isPrivatePath, noticePrivateBlocked, PRIVATE_FOLDER_MESSAGE } from "@/privateFolders";
 import { SelectedTextContext } from "@/types/message";
 import { ChainType } from "@/chainType";
 import { RESTRICTION_MESSAGES } from "@/constants";
@@ -500,6 +501,12 @@ export class ContextProcessor {
       try {
         if (excludedNotePaths.has(note.path)) {
           logInfo(`Skipping note ${note.path} as it was included via custom prompt.`);
+          return;
+        }
+
+        if (isPrivatePath(note.path)) {
+          noticePrivateBlocked(note.path);
+          additionalContext += `\n\n<${prompt_tag}_blocked>\n<path>${note.path}</path>\n<reason>${PRIVATE_FOLDER_MESSAGE}</reason>\n</${prompt_tag}_blocked>`;
           return;
         }
 

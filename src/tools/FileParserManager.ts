@@ -1,3 +1,4 @@
+import { assertNotPrivate } from "@/privateFolders";
 import { logError, logInfo } from "@/logger";
 import {
   MiyoEpubParser,
@@ -56,6 +57,7 @@ export class FileParserManager {
   }
 
   async parseFile(file: TFile, vault: Vault): Promise<string> {
+    assertNotPrivate(file.path);
     const parser = this.parsers.get(file.extension);
     if (!parser) {
       throw new Error(`No parser found for file type: ${file.extension}`);

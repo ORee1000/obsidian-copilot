@@ -1,3 +1,4 @@
+import { isPrivatePath } from "@/privateFolders";
 import { branded } from "@/lite";
 import { startReleaseUpdateCheck } from "@/services/releaseUpdateNotice";
 import { releaseCursorAssociation } from "@/editor/releaseCursorAssociation";
@@ -923,7 +924,8 @@ export default class CopilotPlugin extends Plugin implements CopilotStartup {
         const selection = activeView?.editor?.getSelection();
         if (selection) return selection;
         const activeFile = this.app.workspace.getActiveFile();
-        return activeFile ? this.app.vault.read(activeFile) : "";
+        if (!activeFile || isPrivatePath(activeFile.path)) return "";
+        return this.app.vault.read(activeFile);
       },
       replaceSelection: activeView?.editor?.replaceSelection.bind(activeView.editor) || (() => {}),
     } as Partial<Editor> as Editor;

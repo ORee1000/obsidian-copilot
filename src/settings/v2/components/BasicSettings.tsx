@@ -246,6 +246,16 @@ export const BasicSettings: React.FC = () => {
         />
 
         <SettingItem
+          type="textarea"
+          title="Private folders"
+          description="Hestia never reads, searches, edits or sends notes in these folders to a model. One folder path per line. Agent-mode CLIs read files on their own and are not covered."
+          value={settings.privateFolders}
+          onChange={(value) => updateSetting("privateFolders", value)}
+          placeholder="Folder/Subfolder"
+          rows={3}
+        />
+
+        <SettingItem
           type="custom"
           title="Copilot folder location"
           description="Where Copilot keeps chats, commands, memory, and more. Its other folders live inside this one."

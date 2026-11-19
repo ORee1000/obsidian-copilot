@@ -1,3 +1,4 @@
+import { isPrivatePath, noticePrivateBlocked } from "@/privateFolders";
 import { compareSemver } from "@/utils/semver";
 
 import { ChainType } from "@/chainType";
@@ -262,6 +263,10 @@ export function isTextReadableFile(file: TFile | null): boolean {
 
 export async function getFileContent(file: TFile, vault: Vault): Promise<string | null> {
   if (!isTextReadableFile(file)) return null;
+  if (isPrivatePath(file.path)) {
+    noticePrivateBlocked(file.path);
+    return null;
+  }
   return await vault.read(file);
 }
 

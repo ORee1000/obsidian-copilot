@@ -562,6 +562,17 @@ describe("searchUtils", () => {
       } as unknown as Parameters<typeof getSystemExcludedFolders>[0]);
       expect(new Set(folders)).toEqual(new Set(["copilot", "Copilot"]));
     });
+
+    it("adds every private folder so search, indexing and projects skip it (https://github.com/ORee1000/obsidian-copilot/issues/1)", () => {
+      const folders = getSystemExcludedFolders({
+        copilotFolder: "copilot",
+        copilotRootHistory: [],
+        privateFolders: "Developing Notes/00-Agent-Memory\nSecrets/",
+      } as unknown as Parameters<typeof getSystemExcludedFolders>[0]);
+      expect(new Set(folders)).toEqual(
+        new Set(["copilot", "Developing Notes/00-Agent-Memory", "Secrets"])
+      );
+    });
   });
 
   describe("isInternalExcludedPath()", () => {

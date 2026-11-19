@@ -78,6 +78,7 @@ export interface CopilotSettings {
   enableInlineCitations: boolean;
   qaExclusions: string;
   qaInclusions: string;
+  privateFolders: string;
   groqApiKey: string;
   activeModels: Array<CustomModel>;
   promptUsageTimestamps: Record<string, number>;
@@ -710,6 +711,10 @@ export function sanitizeSettings(settings: CopilotSettings): CopilotSettings {
       : DEFAULT_SETTINGS.userSystemPromptsFolder;
 
   sanitizedSettings.qaExclusions = sanitizeQaExclusions(settingsToSanitize.qaExclusions);
+
+  if (typeof settingsToSanitize.privateFolders !== "string") {
+    sanitizedSettings.privateFolders = DEFAULT_SETTINGS.privateFolders;
+  }
 
   sanitizedSettings.agentMode = sanitizeAgentMode(sanitizedSettings.agentMode);
 

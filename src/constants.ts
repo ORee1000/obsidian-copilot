@@ -56,6 +56,8 @@ export const DEFAULT_SKILLS_FOLDER = `${COPILOT_FOLDER_ROOT}/skills`;
 const DEFAULT_CONVERTED_DOC_OUTPUT_FOLDER = "";
 export const COPILOT_CONVERSATION_TAG = "copilot-conversation";
 export const DEFAULT_QA_EXCLUSIONS_SETTING = COPILOT_FOLDER_ROOT;
+// Hestia never reads, searches, edits or sends these folders to a model; the default is the vault's shared agent memory (agent-mode CLIs read files themselves). https://github.com/ORee1000/obsidian-copilot/issues/1
+export const DEFAULT_PRIVATE_FOLDERS = "Developing Notes/00-Agent-Memory";
 export const DEFAULT_SYSTEM_PROMPT = `You are Obsidian Copilot, a helpful assistant that integrates AI to Obsidian note-taking.
   1. Never mention that you do not have access to something. Always rely on the user provided context.
   2. Always answer to the best of your knowledge. If you are unsure about something, say so and ask the user to provide more context.
@@ -487,6 +489,7 @@ export const DEFAULT_SETTINGS: CopilotSettings = {
   customPromptsFolder: DEFAULT_CUSTOM_PROMPTS_FOLDER,
   qaExclusions: DEFAULT_QA_EXCLUSIONS_SETTING,
   qaInclusions: "",
+  privateFolders: DEFAULT_PRIVATE_FOLDERS,
   chatNoteContextPath: "",
   chatNoteContextTags: [],
   debug: false,

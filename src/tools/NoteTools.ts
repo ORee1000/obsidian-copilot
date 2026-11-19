@@ -1,3 +1,4 @@
+import { isPrivatePath, PRIVATE_FOLDER_MESSAGE } from "@/privateFolders";
 import { App, TFile } from "obsidian";
 import * as z from "zod";
 import { logInfo, logWarn } from "@/logger";
@@ -425,15 +426,24 @@ const createReadNoteTool = (app: App) =>
           notePath: sanitizedPath,
           status: "not_unique",
           message: `Multiple notes match "${sanitizedPath}". Provide a more specific path.`,
-          candidates: resolution.matches.map((file) => ({
-            path: file.path,
-            title: file.basename,
-          })),
+          candidates: resolution.matches
+            .filter((file) => !isPrivatePath(file.path))
+            .map((file) => ({
+              path: file.path,
+              title: file.basename,
+            })),
         };
       }
 
       const file = resolution.file;
       const canonicalPath = file.path;
+      if (isPrivatePath(canonicalPath)) {
+        return {
+          notePath: canonicalPath,
+          status: "private_folder",
+          message: PRIVATE_FOLDER_MESSAGE,
+        };
+      }
       const text = await readNoteText(app, file);
       const chunks = chunkContentByLines(file, text);
       const totalChunks = chunks.length;

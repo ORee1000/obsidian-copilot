@@ -1,3 +1,4 @@
+import { assertNotPrivate, isPrivatePath, PRIVATE_FOLDER_MESSAGE } from "@/privateFolders";
 import { App, TFile } from "obsidian";
 import { APPLY_VIEW_TYPE } from "@/constants";
 import { diffTrimmedLines } from "diff";
@@ -9,6 +10,7 @@ import { getSettings } from "@/settings/model";
 import { logWarn } from "@/logger";
 
 async function getFile(app: App, file_path: string): Promise<TFile> {
+  assertNotPrivate(file_path);
   let file = app.vault.getAbstractFileByPath(file_path);
   if (file && file instanceof TFile) {
     return file;
@@ -430,6 +432,9 @@ const createEditFileTool = (app: App) =>
       newText: string;
     }) => {
       const sanitizedPath = sanitizeFilePath(path);
+      if (isPrivatePath(sanitizedPath)) {
+        return { result: "failed" as ApplyViewResult, message: PRIVATE_FOLDER_MESSAGE };
+      }
       const file = app.vault.getAbstractFileByPath(sanitizedPath);
 
       if (!file || !(file instanceof TFile)) {

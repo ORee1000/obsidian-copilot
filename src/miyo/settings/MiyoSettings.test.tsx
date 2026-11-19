@@ -640,7 +640,7 @@ describe("MiyoSettings", () => {
       expect(lastModalOptions).toBeNull();
     });
 
-    it("registers the vault with system roots and Obsidian ignores, but no user QA rules — https://github.com/Brevilabs/obsidian-copilot-private/issues/284", async () => {
+    it("registers the vault with system roots, private folders and Obsidian ignores, but no user QA rules — https://github.com/Brevilabs/obsidian-copilot-private/issues/284 https://github.com/ORee1000/obsidian-copilot/issues/1", async () => {
       mockRegistration = "unregistered";
       mockIgnoreFilters = ["private/", ".", "./", "..", "./notes", "/pattern/", "nested//ignored/"];
       render(<MiyoSettings />);
@@ -656,7 +656,14 @@ describe("MiyoSettings", () => {
       expect(addFolderBodies).toEqual([
         {
           path: "/vault",
-          exclude_folders: ["copilot", "private", "./notes", "/pattern", "nested//ignored"],
+          exclude_folders: [
+            "copilot",
+            "Developing Notes/00-Agent-Memory",
+            "private",
+            "./notes",
+            "/pattern",
+            "nested//ignored",
+          ],
           allow_remote_read: true,
         },
       ]);
@@ -679,7 +686,7 @@ describe("MiyoSettings", () => {
       expect(addFolderBodies).toEqual([
         {
           path: "/vault",
-          exclude_folders: ["copilot", "team-ai"],
+          exclude_folders: ["copilot", "team-ai", "Developing Notes/00-Agent-Memory"],
           allow_remote_read: true,
         },
       ]);

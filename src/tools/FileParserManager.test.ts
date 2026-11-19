@@ -81,6 +81,23 @@ describe("FileParserManager", () => {
       );
     });
 
+    describe("parseFile()", () => {
+      it("refuses to read a note in a private folder (https://github.com/ORee1000/obsidian-copilot/issues/1)", async () => {
+        mockGetSettings.mockReturnValue(settings({ privateFolders: "Private" }));
+        const read = jest.fn(async () => "secret");
+        const privateVault = { ...vault, read } as unknown as Vault;
+
+        await expect(
+          new FileParserManager().parseFile(
+            // eslint-disable-next-line obsidianmd/no-tfile-tfolder-cast -- test fixture; not a real TFile
+            { extension: "md", path: "Private/secret.md", basename: "secret" } as unknown as TFile,
+            privateVault
+          )
+        ).rejects.toThrow("Private/secret");
+        expect(read).not.toHaveBeenCalled();
+      });
+    });
+
     describe("forOneSend()", () => {
       const note = (name: string): TFile =>
         // eslint-disable-next-line obsidianmd/no-tfile-tfolder-cast -- test fixture; not a real TFile

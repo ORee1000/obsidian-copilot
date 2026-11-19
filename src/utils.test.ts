@@ -6,6 +6,7 @@ import {
   extractNoteFiles,
   extractTemplateNoteFiles,
   formatDateTime,
+  getFileContent,
   getNotesFromPath,
   getNotesFromTags,
   getPropertyValuesFromNote,
@@ -460,6 +461,27 @@ describe("utils", () => {
       mockMetadataCache.getFileCache.mockReturnValue({ frontmatter: { Topics: "Physics" } });
       expect(noteHasProperty(mockApp, file, "constructor")).toBe(false);
       expect(noteHasProperty(mockApp, file, "toString")).toBe(false);
+    });
+  });
+
+  describe("getFileContent()", () => {
+    it("returns null without reading a note in a private folder (https://github.com/ORee1000/obsidian-copilot/issues/1)", async () => {
+      const read = jest.fn(async () => "secret");
+      const file = new (TFile as unknown as new (path: string) => TFile)(
+        "Developing Notes/00-Agent-Memory/a.md"
+      );
+
+      await expect(getFileContent(file, { read } as unknown as Obsidian.Vault)).resolves.toBeNull();
+      expect(read).not.toHaveBeenCalled();
+    });
+
+    it("returns the text of an ordinary note", async () => {
+      const read = jest.fn(async () => "body");
+      const file = new (TFile as unknown as new (path: string) => TFile)("Notes/a.md");
+
+      await expect(getFileContent(file, { read } as unknown as Obsidian.Vault)).resolves.toBe(
+        "body"
+      );
     });
   });
 

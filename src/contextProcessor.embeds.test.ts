@@ -67,6 +67,25 @@ describe("contextProcessor", () => {
     };
 
     describe("processContextNotes()", () => {
+      it("sends a blocked marker instead of the content of a note in a private folder (https://github.com/ORee1000/obsidian-copilot/issues/1)", async () => {
+        const secret = createMockFile("Developing Notes/00-Agent-Memory/Shared/a.md");
+        registerFile(secret, "secret body");
+
+        const result = await contextProcessor.processContextNotes(
+          new Set(),
+          fileParserManager as FileParserManager,
+          vault,
+          [],
+          true,
+          secret,
+          ChainType.LLM_CHAIN
+        );
+
+        expect(result).toContain("<active_note_blocked>");
+        expect(result).not.toContain("secret body");
+        expect((fileParserManager as { parseFile: jest.Mock }).parseFile).not.toHaveBeenCalled();
+      });
+
       it("inlines the body of an embedded note inside an embedded-note block", async () => {
         const source = createMockFile("Source.md");
         const embedded = createMockFile("Embedded.md");

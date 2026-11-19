@@ -7,6 +7,7 @@ import { getEffectiveProjectsFolder } from "@/settings/copilotFolder";
 import { logFileManager } from "@/logFileManager";
 import { getPropertyValuesFromNote, getTagsFromNote, noteHasProperty, stripHash } from "@/utils";
 import { hasCaseInsensitiveFilesystem } from "@/utils/vaultAdapterUtils";
+import { getPrivateFolders } from "@/privateFolders";
 import { App, getAllTags, TFile } from "obsidian";
 
 export interface PatternCategory {
@@ -83,7 +84,13 @@ export function getMatchingPatterns(): {
 
 export function getSystemExcludedFolders(settings: CopilotSettings): string[] {
   const history = Array.isArray(settings.copilotRootHistory) ? settings.copilotRootHistory : [];
-  return normalizeRootFolders([COPILOT_FOLDER_ROOT, settings.copilotFolder, ...history]);
+  // Private folders ride on the system exclusions so search, indexing, projects and file trees all skip them. https://github.com/ORee1000/obsidian-copilot/issues/1
+  return normalizeRootFolders([
+    COPILOT_FOLDER_ROOT,
+    settings.copilotFolder,
+    ...history,
+    ...getPrivateFolders(settings),
+  ]);
 }
 
 export function isSystemExcludedPath(filePath: string): boolean {

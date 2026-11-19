@@ -181,6 +181,20 @@ describe("NoteTools", () => {
       expect(mockRead).not.toHaveBeenCalled();
     });
 
+    it("returns private_folder without reading when the note is in a private folder (https://github.com/ORee1000/obsidian-copilot/issues/1)", async () => {
+      const privatePath = "Developing Notes/00-Agent-Memory/claude/x.md";
+      getAbstractFileByPathMock.mockImplementation((path: string) =>
+        path === privatePath ? makeFile(privatePath) : null
+      );
+
+      const result = await invokeReadNoteTool({ notePath: privatePath });
+
+      expect(result.status).toBe("private_folder");
+      expect(result.notePath).toBe(privatePath);
+      expect(result.content).toBeUndefined();
+      expect(mockRead).not.toHaveBeenCalled();
+    });
+
     it("returns not_found without reading when the note cannot be resolved", async () => {
       const result = await invokeReadNoteTool({ notePath: "Notes/missing.md" });
 

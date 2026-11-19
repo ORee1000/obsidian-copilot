@@ -1,3 +1,4 @@
+import { isPrivatePath } from "@/privateFolders";
 import { TFile, Vault } from "obsidian";
 
 interface CanvasNodeBase {
@@ -47,7 +48,8 @@ export class CanvasLoader {
       nodes.map(async (n) => {
         if (n.type === "file" && n.file) {
           const file = this.vault.getAbstractFileByPath(n.file);
-          const md = file instanceof TFile ? await this.vault.read(file) : "";
+          const md =
+            file instanceof TFile && !isPrivatePath(file.path) ? await this.vault.read(file) : "";
           return { ...n, content: md };
         }
         if (n.type === "text") return { ...n, content: n.text ?? "" };
